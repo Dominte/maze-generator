@@ -7,7 +7,7 @@ public class Main {
         System.out.println(mazeSolution.getSymbolicMaze());
 
         mazeSolution.getSpecialStates();
-        System.out.println(mazeSolution.getRawMaze());
-        System.out.println(mazeSolution.isSolved());
+        mazeSolution.backTrackingMaze();
+
     }
 }
