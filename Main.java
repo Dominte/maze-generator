@@ -3,11 +3,12 @@ public class Main {
         MazeGenerator mazeGenerator = new MazeGenerator(30);
 
 
-        MazeSolution mazeSolution = new MazeSolution(mazeGenerator.generateMazeWithoutStates(),1,1,1,2);
+        MazeSolution mazeSolution = new MazeSolution(mazeGenerator.generateMazeWithoutStates(),1,1,3,3);
         System.out.println(mazeSolution.getSymbolicMaze());
 
         mazeSolution.getSpecialStates();
         mazeSolution.backTrackingMaze();
+
 
     }
 }

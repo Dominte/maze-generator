@@ -43,7 +43,7 @@ class MazeGenerator {
         int xFinish = random.nextInt(30);
         int yFinish = random.nextInt(30);
 
-        maze[xStart][yStart] = 1;
+        maze[xStart][yStart] = -3;
         maze[xFinish][yFinish] = -2;
 
         return maze;
@@ -66,7 +66,8 @@ class MazeGenerator {
                     sb.append("*");
                 else if(maze[i][j] == -2)
                     sb.append("F");
-                else if(maze[i][j]==1)
+
+                else if(maze[i][j]==-3)
                     sb.append("S");
                 else
                     sb.append(" ");
