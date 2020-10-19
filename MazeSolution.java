@@ -40,19 +40,8 @@ public class MazeSolution {
         }
     }
 
-    public boolean isSolved() { //????????????????
-
-        
-        if (maze[finish.x - 1][finish.y] != -1 && maze[finish.x - 1][finish.y] != 0)
-            return true;
-        if (maze[finish.x][finish.y - 1] != -1 && maze[finish.x - 1][finish.y] != 0)
-            return true;
-        if (maze[finish.x][finish.y + 1] != -1 && maze[finish.x - 1][finish.y] != 0)
-            return true;
-        if (maze[finish.x + 1][finish.y] != -1 && maze[finish.x - 1][finish.y] != 0)
-            return true;
-
-        return false;
+    public boolean isInitialStateSolved() {
+        return finish.x == start.x && finish.y == start.y;
     }
 
     public String getRawMaze() {
