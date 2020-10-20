@@ -2,21 +2,23 @@ public class Main {
     public static void main(String[] args) {
         MazeGenerator mazeGenerator = new MazeGenerator(30);
 
-        //BFS bfs = new BFS(mazeGenerator.generateMazeWithoutStates(),1,3,1,3);
-        //bfs.Start();
-        //System.out.println(bfs.getSymbolicMaze());
+        BFS bfs = new BFS(mazeGenerator.generateMazeWithoutStates(),1,1,4,4);
+        bfs.Start();
+        System.out.println(bfs.getSymbolicMaze());
 
-        /* MazeSolution mazeSolution = new MazeSolution(mazeGenerator.generateMazeWithoutStates(),1,1,3,3);
-        System.out.println(mazeSolution.getSymbolicMaze());
+        mazeGenerator.reset();
 
-        mazeSolution.getSpecialStates();
-        mazeSolution.backTrackingMaze(); */
-
-        MazeSolution mazeSolution = new MazeSolution(mazeGenerator.generateMazeWithoutStates(),1,1,4,4);
-        System.out.println(mazeSolution.getSymbolicMaze());
-        mazeSolution.hillClimbing();
+        MazeSolution BKT = new MazeSolution(mazeGenerator.generateMazeWithoutStates(),1,1,4,4);
+        BKT.backTrackingMaze();
         System.out.println("-----------------------------------------------------");
-        System.out.println(mazeSolution.getSymbolicMaze());
+        System.out.println(BKT.getSymbolicMaze());
+
+        mazeGenerator.reset();
+
+        MazeSolution HC = new MazeSolution(mazeGenerator.generateMazeWithoutStates(),1,1,4,4);
+        HC.hillClimbing();
+        System.out.println("-----------------------------------------------------");
+        System.out.println(HC.getSymbolicMaze());
 
 
     }

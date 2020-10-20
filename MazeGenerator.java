@@ -1,7 +1,7 @@
 import java.util.*;
 
 class MazeGenerator {
-    
+
     private Stack<Node> stack = new Stack<>();
     private Random rand = new Random();
     private int[][] maze;
@@ -12,8 +12,15 @@ class MazeGenerator {
         dimension = dim;
     }
 
-    public int[][] generateMazeWithoutStates(){
-        stack.push(new Node(0,0));
+    public void reset() {
+        for (int i = 0; i < maze.length; i++)
+            for (int j = 0; j < maze.length; j++)
+                if (maze[i][j] != 0 && maze[i][j] != -1)
+                    maze[i][j] = 0;
+    }
+
+    public int[][] generateMazeWithoutStates() {
+        stack.push(new Node(0, 0));
         while (!stack.empty()) {
             Node next = stack.pop();
             if (validNextNode(next)) {
@@ -27,7 +34,7 @@ class MazeGenerator {
     }
 
     public int[][] generateMaze() {
-        stack.push(new Node(0,0));
+        stack.push(new Node(0, 0));
         while (!stack.empty()) {
             Node next = stack.pop();
             if (validNextNode(next)) {
@@ -62,17 +69,17 @@ class MazeGenerator {
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
 
-                if(maze[i][j] == -1)
+                if (maze[i][j] == -1)
                     sb.append("*");
-                else if(maze[i][j] == -2)
+                else if (maze[i][j] == -2)
                     sb.append("F");
 
-                else if(maze[i][j]==-3)
+                else if (maze[i][j] == -3)
                     sb.append("S");
                 else
                     sb.append(" ");
 
-                sb.append("  "); 
+                sb.append("  ");
             }
             sb.append("\n");
         }
@@ -81,8 +88,8 @@ class MazeGenerator {
 
     private boolean validNextNode(Node node) {
         int numNeighboringOnes = 0;
-        for (int y = node.y-1; y < node.y+2; y++) {
-            for (int x = node.x-1; x < node.x+2; x++) {
+        for (int y = node.y - 1; y < node.y + 2; y++) {
+            for (int x = node.x - 1; x < node.x + 2; x++) {
                 if (pointOnGrid(x, y) && pointNotNode(node, x, y) && maze[y][x] == -1) {
                     numNeighboringOnes++;
                 }
@@ -101,10 +108,10 @@ class MazeGenerator {
 
     private ArrayList<Node> findNeighbors(Node node) {
         ArrayList<Node> neighbors = new ArrayList<>();
-        for (int y = node.y-1; y < node.y+2; y++) {
-            for (int x = node.x-1; x < node.x+2; x++) {
+        for (int y = node.y - 1; y < node.y + 2; y++) {
+            for (int x = node.x - 1; x < node.x + 2; x++) {
                 if (pointOnGrid(x, y) && pointNotCorner(node, x, y)
-                    && pointNotNode(node, x, y)) {
+                        && pointNotNode(node, x, y)) {
                     neighbors.add(new Node(x, y));
                 }
             }
@@ -119,7 +126,7 @@ class MazeGenerator {
     private Boolean pointNotCorner(Node node, int x, int y) {
         return (x == node.x || y == node.y);
     }
-    
+
     private Boolean pointNotNode(Node node, int x, int y) {
         return !(x == node.x && y == node.y);
     }

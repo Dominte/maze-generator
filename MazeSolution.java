@@ -5,6 +5,7 @@ import static java.lang.Math.abs;
 
 public class MazeSolution {
     int[][] maze;
+    int[][] reset;
     int dimension;
     Node finish;
     Node start;
@@ -15,9 +16,9 @@ public class MazeSolution {
         dimension = maze.length;
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                if (maze[i][j] == -3)
+                if (this.maze[i][j] == -3)
                     start = new Node(i, j);
-                if (maze[i][j] == -2)
+                if (this.maze[i][j] == -2)
                     finish = new Node(i, j);
             }
         }
@@ -25,12 +26,15 @@ public class MazeSolution {
 
     MazeSolution(int[][] maze, int xStart, int xFinish, int yStart, int yFinish) {
         this.maze = maze;
+        this.reset= maze;
         dimension = maze.length;
-        maze[xStart][xFinish] = -3;
-        maze[yStart][yFinish] = -2;
+        this.maze[xStart][xFinish] = -3;
+        this.maze[yStart][yFinish] = -2;
         start = new Node(xStart, xFinish);
         finish = new Node(yStart, yFinish);
     }
+
+
 
     public void getSpecialStates() {
         for (int i = 0; i < dimension; i++) {
@@ -92,7 +96,6 @@ public class MazeSolution {
         pas = 0;
         if (solveMaze(start.x, start.y)) {
             System.out.println("Solution exists");
-            System.out.println(getSymbolicMaze());
 
         } else System.out.println("Solution doesn't exist");
         ;
@@ -102,11 +105,7 @@ public class MazeSolution {
         if (x == finish.x && y == finish.y) {
             return true;
         }
-        /*System.out.println(pas);
-        pas++;
-        if(pas==10)
-            System.out.println(getSymbolicMaze());
-        */
+
         if (isSafe(x, y)) {
             maze[x][y] = 1;
 
@@ -147,9 +146,9 @@ public class MazeSolution {
 
 
     public boolean hillClimbing() {
-        Node n = start;
-        if (n.x == finish.x && n.y == finish.y)
-            return true;
+            Node n = start;
+            if (n.x == finish.x && n.y == finish.y)
+                return true;
 
         int currentHeuristic=heuristic(n);
 
@@ -207,18 +206,5 @@ public class MazeSolution {
         return result;
     }
 
-    public int[][] Transition (int[][] maze, int xCurrent, int yCurrent , int xNext, int yNext){
-        if (ValidateTransition(maze,xCurrent,yCurrent,xNext,yNext)){
-            maze[xNext][yNext] = 1;
-        }
-        return maze;
-    }
-
-    public boolean ValidateTransition (int[][] maze, int xCurrent, int yCurrent , int xNext, int yNext){
-        if (xNext >= 0 && xNext < maze.length && yNext >= 0 && yNext < maze.length){
-            if (Math.abs(xCurrent-xNext)+Math.abs(yCurrent-yNext) == 1 && maze[xNext][yNext] == 0) return true;
-        }
-        return false;
-    }
 
 }
