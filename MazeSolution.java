@@ -134,7 +134,7 @@ public class MazeSolution {
         if (isSafe(n.x - 1, n.y))
             nodes.add(new Node(n.x - 1, n.y));
         if (isSafe(n.x, n.y + 1))
-            nodes.add(new Node(n.x + 1, n.y + 1));
+            nodes.add(new Node(n.x , n.y + 1));
         if (isSafe(n.x, n.y - 1))
             nodes.add(new Node(n.x, n.y - 1));
 
@@ -165,9 +165,17 @@ public class MazeSolution {
         int finalMin = min;
         nodes.removeIf((Node node) -> heuristic(node)!= finalMin);
 
-        for(Node node: nodes)
-            return hillClimbingUtil(node);
+        boolean result=false;
 
+        for(Node node: nodes)
+            result= result | hillClimbingUtil(node);
+
+        if(result) {
+            System.out.println("Solution found");
+            return true;
+        }
+
+        System.out.println("No solution found");
         return false;
     }
 
@@ -192,12 +200,12 @@ public class MazeSolution {
         int finalMin = min;
         nodes.removeIf((Node node) -> heuristic(node)!= finalMin);
 
+        boolean result=false;
+
         for(Node node: nodes)
-            return hillClimbingUtil(node);
+            result= result | hillClimbingUtil(node);
 
-        maze[n.x][n.y]=0;
-
-        return false;
+        return result;
     }
 
 
