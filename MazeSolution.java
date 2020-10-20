@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import static java.lang.Math.abs;
 
 public class MazeSolution {
     int[][] maze;
@@ -86,12 +89,13 @@ public class MazeSolution {
     }
 
     public void backTrackingMaze() {
-        pas=0;
+        pas = 0;
         if (solveMaze(start.x, start.y)) {
             System.out.println("Solution exists");
             System.out.println(getSymbolicMaze());
 
-        } else System.out.println("Solution doesn't exist");;
+        } else System.out.println("Solution doesn't exist");
+        ;
     }
 
     public boolean solveMaze(int x, int y) {
@@ -104,9 +108,9 @@ public class MazeSolution {
             System.out.println(getSymbolicMaze());
         */
         if (isSafe(x, y)) {
-            maze[x][y] =1;
+            maze[x][y] = 1;
 
-            if (solveMaze(x + 1, y ))
+            if (solveMaze(x + 1, y))
                 return true;
             if (solveMaze(x, y + 1))
                 return true;
@@ -115,9 +119,83 @@ public class MazeSolution {
             if (solveMaze(x - 1, y))
                 return true;
 
-            maze[x][y]=0;
+            maze[x][y] = 0;
             return false;
         }
+
+        return false;
+    }
+
+    public ArrayList<Node> expandNode(Node n) {
+        ArrayList<Node> nodes = new ArrayList<Node>();
+
+        if (isSafe(n.x + 1, n.y))
+            nodes.add(new Node(n.x + 1, n.y));
+        if (isSafe(n.x - 1, n.y))
+            nodes.add(new Node(n.x - 1, n.y));
+        if (isSafe(n.x, n.y + 1))
+            nodes.add(new Node(n.x + 1, n.y + 1));
+        if (isSafe(n.x, n.y - 1))
+            nodes.add(new Node(n.x, n.y - 1));
+
+        return nodes;
+    }
+
+    public int heuristic(Node n) {
+        return abs(n.x - finish.x) + abs(n.y - finish.y);
+    }
+
+
+    public boolean hillClimbing() {
+        Node n = start;
+        if (n.x == finish.x && n.y == finish.y)
+            return true;
+
+        int currentHeuristic=heuristic(n);
+
+        ArrayList<Node> nodes = expandNode(n);
+        int min = dimension * dimension + 1;
+        for (Node node : nodes)
+            if (heuristic(node) < min)
+                min = heuristic(node);
+
+        if(min>currentHeuristic)
+            return false;
+
+        int finalMin = min;
+        nodes.removeIf((Node node) -> heuristic(node)!= finalMin);
+
+        for(Node node: nodes)
+            return hillClimbingUtil(node);
+
+        return false;
+    }
+
+    public boolean hillClimbingUtil(Node n) {
+
+        if (n.x == finish.x && n.y == finish.y)
+            return true;
+
+        maze[n.x][n.y]=1;
+
+        int currentHeuristic=heuristic(n);
+
+        ArrayList<Node> nodes = expandNode(n);
+        int min = dimension * dimension + 1;
+        for (Node node : nodes)
+            if (heuristic(node) < min)
+                min = heuristic(node);
+
+        if(min>currentHeuristic)
+            return false;
+
+        int finalMin = min;
+        nodes.removeIf((Node node) -> heuristic(node)!= finalMin);
+
+        for(Node node: nodes)
+            return hillClimbingUtil(node);
+
+        maze[n.x][n.y]=0;
 
         return false;
     }
