@@ -105,7 +105,6 @@ public class MazeSolution {
         if (x == finish.x && y == finish.y) {
             return true;
         }
-
         if (isSafe(x, y)) {
             maze[x][y] = 1;
 
