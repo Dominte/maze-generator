@@ -185,7 +185,6 @@ public class MazeSolution {
             return true;
 
         maze[n.x][n.y]=1;
-
         int currentHeuristic=heuristic(n);
 
         ArrayList<Node> nodes = expandNode(n);
@@ -208,5 +207,18 @@ public class MazeSolution {
         return result;
     }
 
+    public int[][] Transition (int[][] maze, int xCurrent, int yCurrent , int xNext, int yNext){
+        if (ValidateTransition(maze,xCurrent,yCurrent,xNext,yNext)){
+            maze[xNext][yNext] = 1;
+        }
+        return maze;
+    }
+
+    public boolean ValidateTransition (int[][] maze, int xCurrent, int yCurrent , int xNext, int yNext){
+        if (xNext >= 0 && xNext < maze.length && yNext >= 0 && yNext < maze.length){
+            if (Math.abs(xCurrent-xNext)+Math.abs(yCurrent-yNext) == 1 && maze[xNext][yNext] == 0) return true;
+        }
+        return false;
+    }
 
 }
